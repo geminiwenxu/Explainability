@@ -2,6 +2,7 @@ import de_core_news_sm
 import pandas as pd
 from nltk.corpus import stopwords
 from pkg_resources import resource_filename
+from scipy.spatial.distance import cdist
 from transformers import BertTokenizer
 
 from ml_classifier.svc import get_config
@@ -26,12 +27,12 @@ def subwords_wo_stop():
         tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
         tokens = tokenizer.tokenize(neg_text_input)
         # print(neg_text_input)
-        print(tokens)
+        # print(tokens)
         # sen_split = re.findall(r'\w+|\S+', tokens)
         # low_sen_split = [i.lower() for i in sen_split]
         # print(low_sen_split)
         text_wo_stop_words = [word for word in tokens if word not in german_stop_words]  # removing stop words
-        print(text_wo_stop_words)
+        # print(text_wo_stop_words)
         l = len(text_wo_stop_words)
         length.append(l)
         split = 0
@@ -64,15 +65,18 @@ def subwords_wo_stop():
         occurance.append(NONE)
         occurance.append(PROPN)
         occurance.append(VERB)
-        print(occurance)
+        # print(occurance)
         s = pd.Series(occurance, index=feature.columns)
         feature = feature.append(s, ignore_index=True)
     feature['length'] = length
     feature['split'] = ls_split
     feature['sentiment'] = [0] * len(feature.index)
-    print(feature.iloc[:, :-1])
-    # print(feature.iloc[:, :-1].corr(feature['sentiment']))
-    print(feature.corr(method='pearson'))
+
+    print(feature[feature.columns[1:]].corr()['sentiment'][:])
+
+    correlations = cdist(feature.iloc[:, :-1].to_numpy().transpose(), feature['sentiment'].to_numpy().reshape(1, -1),
+                         metric='correlation')
+    print(correlations)
 
 
 if __name__ == "__main__":
