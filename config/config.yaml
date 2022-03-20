@@ -1,0 +1,97 @@
+random_seed: 42
+train_set_size: 0.6
+test_set_size: 0.5
+class_names:
+  - negative
+  - neutral
+  - positive
+strategies:
+  - multi_noger
+  - multi_all
+  - ger_only
+  - multi_noenglish
+  - multi_noarabic
+  - multi_nodutch
+  - multi_nofrench
+  - multi_nochinese
+  - multi_nopolish
+  - only_arabic
+  - only_chinese
+  - only_french
+  - only_dutch
+  - only_polish
+  - only_english
+pre_trained_model_name: bert-base-multilingual-cased
+batch_size: 32
+max_len: 256
+epochs: 3
+learning_rate: 0.00002
+num_workers: 4
+correct_bias: False
+num_warmup_steps: 0
+dropout_ratio: 0.3
+shuffle: True
+source:
+  path: /../../data/
+sink:
+  default: ../sink
+  path: ../../sink/
+  csv:
+    sep: ;
+    encoding: utf-8
+    mode: a
+    header: False
+    index: False
+  suffix: .csv
+cache:
+  default: ../cache
+data:
+  default: ../data
+models:
+  default: ../models
+logs:
+  path: ../logs
+  level: INFO
+
+model_path:
+  path: /../models/multi_all_model_opt.pth
+file_path:
+  path: /../data/german_sink_validation_balanced.csv
+
+feature_neg_file_path:
+  path: /../data/partial_misclassification_error_report.csv
+feature_test_file_path:
+  path: /../data/test.csv
+feature_pos_file_path:
+  path: /../data/correct_classification.csv
+
+pos_feature_file_path:
+  path: /../data/pos_feature.json
+neg_feature_file_path:
+  path: /../data/neg_feature.json
+feature_file_path:
+  path: /../data/feature.json
+svm_save_path:
+  path: /../data/svm_result/
+
+feature_names:
+  [ 'adjpd', 'A', 'advpd', 'alpha', 'apd', 'ATL', 'ASL', 'L', 'dpd', 'H',
+    'G', 'hl', 'h', 'ipd', 'npd', 'lmbd', 'NDW', 'ppd', 'preppd', 'Q',
+    'R1', 'RR', 'RRR', 'stc', 'tc', 'ttr', 'UG', 'VD', 'vpd', 'LDEmu',
+    'depmu', 'MDDmu', 'DDEmu', 'TCImu', 'imbmu', 'Lmu', 'Wmu', 'wmu',
+    'lmu', 'cmu', 'LDEG', 'depG', 'MDDG', 'DDEG', 'TCIG', 'imbG', 'LG',
+    'WG', 'wG', 'lG', 'cG', 'LDEH', 'depH', 'MDDH', 'DDEH', 'TCIH',
+    'imbH', 'LH', 'WH', 'wH', 'lH', 'cH', 'LDErac', 'deprac', 'MDDrac',
+    'DDErac', 'TCIrac', 'imbrac', 'Lrac', 'Wrac', 'wrac', 'lrac', 'crac',
+    'LDEadc', 'depadc', 'MDDadc', 'DDEadc', 'TCIadc', 'imbadc', 'Ladc',
+    'Wadc', 'wadc', 'ladc', 'cadc', 'LDEradc', 'depradc', 'MDDradc',
+    'DDEradc', 'TCIradc', 'imbradc', 'Lradc', 'Wradc', 'wradc', 'lradc',
+    'cradc', 'LDEadtw', 'depadtw', 'MDDadtw', 'DDEadtw', 'TCIadtw',
+    'imbadtw', 'Ladtw', 'Wadtw', 'wadtw', 'ladtw', 'cadtw', 'btH',
+    'btlH', 'btsH', 'btlsH', 'bth', 'btdfa', 'btly', 'btrac', 'btradc',
+    'btac1', 'btac2', 'btac3', 'btac4', 'btac5', 'btac6', 'btac7',
+    'btac8', 'btac9', 'btac10', 'btadc1', 'btadc2', 'btadc3', 'btadc4',
+    'btadc5', 'btadc6', 'btadc7', 'btadc8', 'btadc9', 'btadc10' ]
+
+output_dir:
+  path: /../data/fig

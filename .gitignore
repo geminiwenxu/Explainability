@@ -1,0 +1,12 @@
+.DS_Store
+.idea/
+data/
+venv/
+models/
+sink/
+text_report/
+cache/
+/__pycache__/
+*.pyc
+*.log
+ml_classifier/wandb/
