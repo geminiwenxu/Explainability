@@ -60,8 +60,10 @@ file_path:
 
 feature_neg_file_path:
   path: /../data/partial_misclassification_error_report.csv
-feature_test_file_path:
-  path: /../data/test.csv
+feature_pos_test_file_path:
+  path: /../data/pos_test.csv
+feature_neg_test_file_path:
+  path: /../data/neg_test.csv
 feature_pos_file_path:
   path: /../data/correct_classification.csv
 
