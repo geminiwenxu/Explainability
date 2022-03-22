@@ -2,6 +2,7 @@ import de_core_news_sm
 import pandas as pd
 from nltk.corpus import stopwords
 from pkg_resources import resource_filename
+from scipy.spatial import distance
 from scipy.spatial.distance import cdist
 from transformers import BertTokenizer
 
@@ -20,9 +21,9 @@ def subwords_wo_stop():
     feature = pd.DataFrame(columns=['ADV', 'ADJ', 'NONE', 'PROPN', 'VERB'])
     length = []
     ls_split = []
-    df = pd.read_csv(feature_neg_file_path, sep=';')
+    df = pd.read_csv(feature_neg_test_file_path, sep=';')
     neg_df = df.drop("Unnamed: 0", axis=1)
-    pos_df = pd.read_csv(feature_pos_file_path, sep=',')
+    pos_df = pd.read_csv(feature_pos_test_file_path, sep=',')
 
     for index, row in neg_df.iterrows():
         neg_text_input = row['test_input']
@@ -107,14 +108,30 @@ def subwords_wo_stop():
         feature = feature.append(s, ignore_index=True)
     feature['length'] = length
     feature['split'] = ls_split
-    feature['sentiment'] = [0]*neg_index+[1] * (len(feature.index)-neg_index)
+    feature['sentiment'] = [0] * neg_index + [1] * (len(feature.index) - neg_index)
 
     # print(feature)
+    # correlation between sentiment and all the other features
     print(feature[feature.columns[1:]].corr()['sentiment'][:])
 
     correlations = cdist(feature.iloc[:, :-1].to_numpy().transpose(), feature['sentiment'].to_numpy().reshape(1, -1),
                          metric='correlation')
     print(correlations)
+
+    print(distance.correlation(feature['split'].to_numpy(),
+                               feature['sentiment'].to_numpy()))
+    print(distance.correlation(feature['length'].to_numpy(),
+                               feature['sentiment'].to_numpy()))
+    print(distance.correlation(feature['ADV'].to_numpy(),
+                               feature['sentiment'].to_numpy()))
+    print(distance.correlation(feature['ADJ'].to_numpy(),
+                               feature['sentiment'].to_numpy()))
+    print(distance.correlation(feature['NONE'].to_numpy(),
+                               feature['sentiment'].to_numpy()))
+    print(distance.correlation(feature['PROPN'].to_numpy(),
+                               feature['sentiment'].to_numpy()))
+    print(distance.correlation(feature['VERB'].to_numpy(),
+                               feature['sentiment'].to_numpy()))
 
 
 if __name__ == "__main__":
