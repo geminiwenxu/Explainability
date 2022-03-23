@@ -44,17 +44,37 @@ def embeddings(text):
     token_embeddings = token_embeddings.permute(1, 0, 2)
     # print(token_embeddings.size())  # torch.Size([22, 13, 768]) 22个tokens, 13层layers and 786个hidden states
 
-    token_vecs_cat = []
+    # token_vecs_cat = []
+    # for token in token_embeddings:
+    #     # concatenate the last four layers, giving us a single word vector per token.
+    #     # Each vector will have length 4 x 768 = 3,072
+    #     cat_vec = torch.cat((token[-1], token[-2], token[-3], token[-4]), dim=0)
+    #     token_vecs_cat.append(cat_vec)
+    # # print(token_vecs_cat)
+    # print('Shape is: %d x %d' % (len(token_vecs_cat), len(token_vecs_cat[0])))  # Shape is: 22 x 3072
+    # return token_vecs_cat, tokenized_text
+
+    ######################################################
+    # Stores the token vectors, with shape [22 x 768]
+    token_vecs_sum = []
+
+    # `token_embeddings` is a [22 x 12 x 768] tensor.
+
+    # For each token in the sentence...
     for token in token_embeddings:
-        # concatenate the last four layers, giving us a single word vector per token.
-        # Each vector will have length 4 x 768 = 3,072
-        cat_vec = torch.cat((token[-1], token[-2], token[-3], token[-4]), dim=0)
-        token_vecs_cat.append(cat_vec)
-    # print(token_vecs_cat)
-    print('Shape is: %d x %d' % (len(token_vecs_cat), len(token_vecs_cat[0])))  # Shape is: 22 x 3072
-    return token_vecs_cat, tokenized_text
+        print(token.shape)
+        # `token` is a [12 x 768] tensor
+
+        # Sum the vectors from the last four layers.
+        sum_vec = torch.mean(token[-4:], dim=0)
+
+        # Use `sum_vec` to represent `token`.
+        token_vecs_sum.append(sum_vec)
+    print('Shape is: %d x %d' % (len(token_vecs_sum), len(token_vecs_sum[0])))
+    # print(token_vecs_sum)
+    return token_vecs_sum, tokenized_text
 
 
 if __name__ == "__main__":
-    text = ""
+    text = "hallo world"
     embeddings(text)

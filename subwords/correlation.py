@@ -21,9 +21,9 @@ def subwords_wo_stop():
     feature = pd.DataFrame(columns=['ADV', 'ADJ', 'NONE', 'PROPN', 'VERB'])
     length = []
     ls_split = []
-    df = pd.read_csv(feature_neg_test_file_path, sep=';')
+    df = pd.read_csv(feature_neg_file_path, sep=';')
     neg_df = df.drop("Unnamed: 0", axis=1)
-    pos_df = pd.read_csv(feature_pos_test_file_path, sep=',')
+    pos_df = pd.read_csv(feature_pos_file_path, sep=',')
 
     for index, row in neg_df.iterrows():
         neg_text_input = row['test_input']

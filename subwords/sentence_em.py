@@ -14,7 +14,7 @@ def sentence_em():
     config = get_config('/../config/config.yaml')
     feature_neg_file_path = resource_filename(__name__, config['feature_neg_file_path']['path'])
     feature_pos_file_path = resource_filename(__name__, config['feature_pos_file_path']['path'])
-    feature_test_file_path = resource_filename(__name__, config['feature_test_file_path']['path'])
+    feature_test_file_path = resource_filename(__name__, config['feature_neg_test_file_path']['path'])
     german_stop_words = stopwords.words('german')
 
     df = pd.read_csv(feature_test_file_path, sep=';')
@@ -76,6 +76,7 @@ def sentence_em():
     output_dir = resource_filename(__name__, config['output_dir']['path'])
     name_title = 'subword embeddings'
     get_pacmap_pca_tsne_word_vs_x(flat_ls_wrong, [flat_ls_correct], legend_names, output_dir, name_title)
+    return flat_ls_wrong, flat_ls_correct
 
     # df = pd.read_csv(feature_pos_file_path, sep=',')
     # for index, row in df.iterrows():
