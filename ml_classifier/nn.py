@@ -20,6 +20,7 @@ def get_config(path: str) -> dict:
 
 def prepare_data(neg_path, pos_path):
     feature_names = config['feature_names']
+    print(feature_names)
 
     decision_features = ['depH', 'NDW', 'Q', 'dpd', 'advpd', 'RR', 'preppd', 'adjpd', 'btac1', 'G', 'imbG', 'wG',
                          'DDEmu', 'btH', 'lmbd', 'ASL', 'btadc10', 'npd', 'RRR', 'btadc10', 'Lradc', 'btrac', 'btac4',
@@ -47,7 +48,7 @@ def prepare_data(neg_path, pos_path):
     best_combination = [0, 2, 3, 6, 8, 10, 16, 18, 19, 21, 22, 26, 32, 34, 35, 45, 48, 52, 87, 106, 113, 114,
                         115, 117, 118, 124, 126, 127]
     ls_index = []
-    for i in bert_features:  # using different features
+    for i in feature_names:  # using different features
         index = feature_names.index(i)
         ls_index.append(index)
     print(ls_index)
@@ -131,5 +132,5 @@ if __name__ == "__main__":
     neg_path = resource_filename(__name__, config['neg_feature_file_path']['path'])
     pos_path = resource_filename(__name__, config['pos_feature_file_path']['path'])
     X_train, X_test, y_train, y_test = prepare_data(neg_path, pos_path)
-    f1 = nn(X_train, X_test, y_train, y_test)
-    print(f1)
+    # f1 = nn(X_train, X_test, y_train, y_test)
+    # print(f1)
