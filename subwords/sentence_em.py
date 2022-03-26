@@ -1,13 +1,14 @@
-from ml_classifier.svc import get_config
-import pandas as pd
-from pkg_resources import resource_filename
-from subwords.embedding import embeddings
-from transformers import BertTokenizer
 import re
-from subwords.visualation import get_pacmap_pca_tsne_word_vs_x
-from matplotlib import pyplot as plt
+
+import pandas as pd
 from nltk.corpus import stopwords
-import spacy
+from pkg_resources import resource_filename
+from sentence_transformers import SentenceTransformer
+from transformers import BertTokenizer
+
+from ml_classifier.svc import get_config
+from subwords.embedding import embeddings
+from subwords.visualation import get_pacmap_pca_tsne_word_vs_x
 
 
 def sentence_em():
@@ -16,7 +17,7 @@ def sentence_em():
     feature_pos_file_path = resource_filename(__name__, config['feature_pos_file_path']['path'])
     feature_test_file_path = resource_filename(__name__, config['feature_neg_test_file_path']['path'])
     german_stop_words = stopwords.words('german')
-
+    model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
     df = pd.read_csv(feature_test_file_path, sep=';')
     result = df.drop("Unnamed: 0", axis=1)
     ls_wrong = []
@@ -25,35 +26,24 @@ def sentence_em():
         neg_text_input = row['test_input']
         tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
         tokens = tokenizer.tokenize(neg_text_input)
-        # print(neg_text_input)
         sen_split = re.findall(r'\w+|\S+', neg_text_input)
         low_sen_split = [i.lower() for i in sen_split]
-        # low_sen_split.remove('.')
-        # print(low_sen_split)
         if len(tokens) < 510:
             try:
-                sentence_embeddings, tokenized_text = embeddings(neg_text_input)
-                # tokenized_text.remove('.')
+                s_em = model.encode(neg_text_input)  # six kinds of embeddings
+                concat, sum_, mean, max_, min_, tokenized_text = embeddings(neg_text_input)
                 common_tokens = list(set(tokenized_text).intersection(low_sen_split))
                 diff_tokens = list(set(tokenized_text) - set(low_sen_split))
-                # print(sentence_embeddings)
-                # print(tokenized_text)
-                # print("common tokens: ", common_tokens)
-                # print("different tokens: ", diff_tokens)
-                # print(sentence_embeddings)
-                # print(tokenized_text)
-                # print(common_tokens)
-                # print(diff_tokens)
                 wrong_token = []
                 for i in diff_tokens:
                     index = tokenized_text.index(i)
-                    token_em = sentence_embeddings[index]
+                    token_em = concat[index]
                     wrong_token.append(token_em)
 
                 correct_token = []
                 for i in common_tokens:
                     index = tokenized_text.index(i)
-                    token_em = sentence_embeddings[index]
+                    token_em = concat[index]
                     correct_token.append(token_em)
 
                 wrong = []

@@ -4,8 +4,10 @@ import numpy as np
 import yaml
 from pkg_resources import resource_filename
 from sklearn.cluster import DBSCAN
-from sklearn.model_selection import train_test_split
+from ml_classifier.svc import get_config
+from subwords.sentence_em import sentence_em
 from subwords.visualation import get_pacmap_pca_tsne_word_vs_x
+
 
 def get_config(path: str) -> dict:
     with open(resource_filename(__name__, path), 'r') as stream:
@@ -92,3 +94,4 @@ if __name__ == "__main__":
     output_dir = resource_filename(__name__, config['output_dir']['path'])
     name_title = 'Cluster'
     get_pacmap_pca_tsne_word_vs_x(word_vec_list, other_emb, legend_names, output_dir, name_title)
+
