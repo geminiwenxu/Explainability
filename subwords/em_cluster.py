@@ -14,7 +14,7 @@ def em_cluster():
     feature_neg_file_path = resource_filename(__name__, config['feature_neg_file_path']['path'])
     feature_test_file_path = resource_filename(__name__, config['feature_neg_test_file_path']['path'])
     model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
-    df = pd.read_csv(feature_neg_file_path, sep=';')
+    df = pd.read_csv(feature_test_file_path, sep=';')
     result = df.drop("Unnamed: 0", axis=1)
     ls_concat = []
     ls_sen = []

@@ -8,6 +8,8 @@ from transformers import BertTokenizer
 
 from ml_classifier.svc import get_config
 
+bert_model = BertTokenizer.from_pretrained('bert-base-uncased')
+
 
 def subwords_wo_stop():
     config = get_config('/../config/config.yaml')
@@ -27,8 +29,7 @@ def subwords_wo_stop():
 
     for index, row in neg_df.iterrows():
         neg_text_input = row['test_input']
-        tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-        tokens = tokenizer.tokenize(neg_text_input)
+        tokens = bert_model.tokenize(neg_text_input)
         text_wo_stop_words = [word for word in tokens if word not in german_stop_words]  # removing stop words
         neg_l = len(text_wo_stop_words)
         length.append(neg_l)
