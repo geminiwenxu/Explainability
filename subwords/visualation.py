@@ -27,14 +27,14 @@ def get_pacmap_pca_tsne_word_vs_x(word_vec_list: list, other_emb: list, legend_n
     t_sne_transformer = TSNE(n_components=2, n_jobs=6)
     X_r_pca = pca_transformer.fit_transform(x_list)
     X_r_t_sne = t_sne_transformer.fit_transform(x_list)
-    # X_r_pacmap = pac_map.fit_transform(pd.DataFrame(x_list).values)
+    X_r_pacmap = pac_map.fit_transform(pd.DataFrame(x_list).values)
     out_pca = output_dir.replace(".png", "_PCA.png")
     out_pacmap = output_dir.replace(".png", "_PaCMAP.png")
     out_tsne = output_dir.replace(".png", "_TSNE.png")
     os.makedirs(os.path.dirname(out_pca), exist_ok=True)
-    # get_visualisation(X_r_pca, y_list, legend_names, out_pca, f"PCA {name_title}")
+    get_visualisation(X_r_pca, y_list, legend_names, out_pca, f"PCA {name_title}")
     # get_visualisation(X_r_pacmap, y_list, legend_names, out_pacmap, f"PaCMAP {name_title}")
-    get_visualisation(X_r_t_sne, y_list, legend_names, out_tsne, f"TSNE {name_title}")
+    # get_visualisation(X_r_t_sne, y_list, legend_names, out_tsne, f"TSNE {name_title}")
 
 
 def get_visualisation(X_r, labels, legend_names, output_dir, name_title):
