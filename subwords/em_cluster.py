@@ -2,10 +2,10 @@ import pandas as pd
 from pkg_resources import resource_filename
 from sentence_transformers import SentenceTransformer
 from sklearn.cluster import DBSCAN
-from transformers import BertTokenizer
 from tqdm import tqdm
+from transformers import BertTokenizer
+
 from ml_classifier.svc import get_config
-from subwords.embedding import embeddings
 from subwords.visualation import get_pacmap_pca_tsne_word_vs_x
 
 bert_model = BertTokenizer.from_pretrained('bert-base-uncased')
@@ -43,15 +43,15 @@ def em_cluster():
         point = ls_sen[index]
         if label == -1:
             word_vec_list.append(point)
-        elif label == 0 or 1 or 2 or 3 or 4:
+        elif label == 0:
             emb1.append(point)
-        elif label == 5 or 6 or 7 or 8 or 9:
+        elif label == 1:
             emb2.append(point)
         else:
             emb3.append(point)
     other_emb = [emb1, emb2, emb3]
     print(len(other_emb))
-    legend_names = ['Noise', '0-4', '5-9', '10-14']
+    legend_names = ['Noise:-1', '0', '1', 'others']
     output_dir = resource_filename(__name__, config['output_dir']['path'])
     name_title = 'Embeddings Cluster'
     get_pacmap_pca_tsne_word_vs_x(word_vec_list, other_emb, legend_names, output_dir, name_title)
