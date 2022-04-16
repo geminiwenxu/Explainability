@@ -1,10 +1,9 @@
 import pandas as pd
 from pkg_resources import resource_filename
 from sentence_transformers import SentenceTransformer
-from sklearn.cluster import DBSCAN
 from tqdm import tqdm
 from transformers import BertTokenizer
-
+from subwords.embedding import embeddings
 from ml_classifier.svc import get_config
 from subwords.visualation import get_pacmap_pca_tsne_word_vs_x
 
@@ -28,9 +27,9 @@ def em_cluster():
             tokens = bert_model.tokenize(neg_text_input)
             if len(tokens) < 510:
                 try:
-                    s_em = model.encode(neg_text_input)  # six kinds of embeddings
-                    # concat, sum_, mean, max_, min_, tokenized_text = embeddings(neg_text_input)
-                    neg_ls_sen.append(s_em)
+                    # s_em = model.encode(neg_text_input)  # six kinds of embeddings
+                    sum_ = embeddings(neg_text_input)
+                    neg_ls_sen.append(sum_)
                 except ValueError:
                     print('value error')
     pos_ls_sen = []
@@ -41,9 +40,9 @@ def em_cluster():
             tokens = bert_model.tokenize(pos_text_input)
             if len(tokens) < 510:
                 try:
-                    s_em = model.encode(pos_text_input)  # six kinds of embeddings
-                    # concat, sum_, mean, max_, min_, tokenized_text = embeddings(neg_text_input)
-                    pos_ls_sen.append(s_em)
+                    # s_em = model.encode(pos_text_input)  # six kinds of embeddings
+                    sum_ = embeddings(pos_text_input)
+                    pos_ls_sen.append(sum_)
                 except ValueError:
                     print('value error')
 
@@ -69,7 +68,7 @@ def em_cluster():
     # print(len(other_emb))
     word_vec_list = neg_ls_sen
     other_emb = [pos_ls_sen]
-    legend_names = ['neg','pos']
+    legend_names = ['neg', 'pos']
     output_dir = resource_filename(__name__, config['output_dir']['path'])
     name_title = 'Embeddings Cluster'
     get_pacmap_pca_tsne_word_vs_x(word_vec_list, other_emb, legend_names, output_dir, name_title)

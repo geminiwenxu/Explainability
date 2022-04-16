@@ -43,24 +43,33 @@ def embeddings(text):
     # Swap dimensions 0 and 1. switch the layers and tokens dimensions.
     token_embeddings = token_embeddings.permute(1, 0, 2)
     # print(token_embeddings.size())  # torch.Size([22, 13, 768]) 22个tokens, 13层layers and 786个hidden states
+    last_four_layers = token_embeddings[:, 0:4, :]
+    # print(last_four_layers.size())
+    the_sum = torch.sum(last_four_layers, dim=0)
+    temp = the_sum.reshape(1, -1)
+    temp_1 = temp.squeeze()
+    vec_sum = temp_1.numpy()
+    print(vec_sum.shape)
+    print(vec_sum)
 
-    token_vecs_cat = []
-    token_vecs_sum = []
-    token_vecs_mean = []
-    token_vecs_max = []
-    token_vecs_min = []
-    for token in token_embeddings:
-        cat_vec = torch.cat((token[-1], token[-2], token[-3], token[-4]), dim=0)
-        token_vecs_cat.append(cat_vec)
-        sum_vec = torch.sum(token[-4:], dim=0)
-        token_vecs_sum.append(sum_vec)
-        mean_vec = torch.mean(token[-4:], dim=0)
-        token_vecs_mean.append(mean_vec)
-        max_vec = torch.max(token[-4:], dim=0)
-        token_vecs_max.append(max_vec)
-        min_vec = torch.min(token[-4:], dim=0)
-        token_vecs_min.append(min_vec)
-    return token_vecs_cat, token_vecs_sum, token_vecs_mean, token_vecs_max, token_vecs_min, tokenized_text
+    # token_vecs_cat = []
+    # token_vecs_sum = []
+    # token_vecs_mean = []
+    # token_vecs_max = []
+    # token_vecs_min = []
+    # for token in token_embeddings:
+    #     cat_vec = torch.cat((token[-1], token[-2], token[-3], token[-4]), dim=0)
+    #     token_vecs_cat.append(cat_vec)
+    #     sum_vec = torch.sum(token[-4:], dim=0)
+    #     token_vecs_sum.append(sum_vec)
+    #     mean_vec = torch.mean(token[-4:], dim=0)
+    #     token_vecs_mean.append(mean_vec)
+    #     max_vec = torch.max(token[-4:], dim=0)
+    #     token_vecs_max.append(max_vec)
+    #     min_vec = torch.min(token[-4:], dim=0)
+    #     token_vecs_min.append(min_vec)
+
+    return vec_sum
 
 
 if __name__ == "__main__":
