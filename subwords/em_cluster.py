@@ -28,8 +28,8 @@ def em_cluster():
             if len(tokens) < 510:
                 try:
                     # s_em = model.encode(neg_text_input)  # six kinds of embeddings
-                    sum_ = embeddings(neg_text_input)
-                    neg_ls_sen.append(sum_)
+                    em = embeddings(neg_text_input)
+                    neg_ls_sen.append(em)
                 except ValueError:
                     print('value error')
     pos_ls_sen = []
@@ -41,8 +41,8 @@ def em_cluster():
             if len(tokens) < 510:
                 try:
                     # s_em = model.encode(pos_text_input)  # six kinds of embeddings
-                    sum_ = embeddings(pos_text_input)
-                    pos_ls_sen.append(sum_)
+                    em = embeddings(pos_text_input)
+                    pos_ls_sen.append(em)
                 except ValueError:
                     print('value error')
 

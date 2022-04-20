@@ -44,13 +44,19 @@ def embeddings(text):
     token_embeddings = token_embeddings.permute(1, 0, 2)
     # print(token_embeddings.size())  # torch.Size([22, 13, 768]) 22个tokens, 13层layers and 786个hidden states
     last_four_layers = token_embeddings[:, 0:4, :]
-    # print(last_four_layers.size())
-    the_sum = torch.sum(last_four_layers, dim=0)
-    temp = the_sum.reshape(1, -1)
+    # the_sum = torch.sum(last_four_layers, dim=0)
+    # temp = the_sum.reshape(1, -1)
+    # temp_1 = temp.squeeze()
+    # vec_sum = temp_1.numpy()
+    # the_min = torch.min(last_four_layers, dim=0)
+    # temp = the_min[0].reshape(1, -1)
+    # temp_1 = temp.squeeze()
+    # vec_min = temp_1.numpy()
+    the_mean = torch.mean(last_four_layers, dim=0)
+    temp = the_mean.reshape(1, -1)
     temp_1 = temp.squeeze()
-    vec_sum = temp_1.numpy()
-    print(vec_sum.shape)
-    print(vec_sum)
+    vec_mean = temp_1.numpy()
+    print(vec_mean.shape)
 
     # token_vecs_cat = []
     # token_vecs_sum = []
@@ -69,7 +75,7 @@ def embeddings(text):
     #     min_vec = torch.min(token[-4:], dim=0)
     #     token_vecs_min.append(min_vec)
 
-    return vec_sum
+    return vec_mean
 
 
 if __name__ == "__main__":
