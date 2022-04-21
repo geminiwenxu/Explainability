@@ -97,3 +97,6 @@ feature_names:
 
 output_dir:
   path: /../data/fig
+
+embedings_file_path:
+  path: /../data/min_embedding.json

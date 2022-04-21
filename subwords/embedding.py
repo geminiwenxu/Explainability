@@ -48,15 +48,14 @@ def embeddings(text):
     # temp = the_sum.reshape(1, -1)
     # temp_1 = temp.squeeze()
     # vec_sum = temp_1.numpy()
-    # the_min = torch.min(last_four_layers, dim=0)
-    # temp = the_min[0].reshape(1, -1)
-    # temp_1 = temp.squeeze()
-    # vec_min = temp_1.numpy()
-    the_mean = torch.mean(last_four_layers, dim=0)
-    temp = the_mean.reshape(1, -1)
+    the_min = torch.min(last_four_layers, dim=0)
+    temp = the_min[0].reshape(1, -1)
     temp_1 = temp.squeeze()
-    vec_mean = temp_1.numpy()
-    print(vec_mean.shape)
+    vec_min = temp_1.numpy()
+    # the_mean = torch.mean(last_four_layers, dim=0)
+    # temp = the_mean.reshape(1, -1)
+    # temp_1 = temp.squeeze()
+    # vec_mean = temp_1.numpy()
 
     # token_vecs_cat = []
     # token_vecs_sum = []
@@ -75,7 +74,7 @@ def embeddings(text):
     #     min_vec = torch.min(token[-4:], dim=0)
     #     token_vecs_min.append(min_vec)
 
-    return vec_mean
+    return vec_min
 
 
 if __name__ == "__main__":
