@@ -99,4 +99,4 @@ output_dir:
   path: /../data/fig
 
 embedings_file_path:
-  path: /../data/min_embedding.json
+  path: /../data/mean_embedding.json
