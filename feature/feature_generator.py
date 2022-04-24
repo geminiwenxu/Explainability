@@ -1849,7 +1849,7 @@ class Scorer():
 
                 names += names_berts
 
-        scores = list(map(float, scores[0]))
+        scores = list(map(float, scores))
 
         return scores, names, text_hash
 
@@ -1857,15 +1857,15 @@ class Scorer():
 if __name__ == "__main__":
     print("Start")
     text = Text("de", "This is a nice text sentence", 0)
-    sc = Scorer(scorers=[AutoBERTT()])
+    # sc = Scorer(scorers=[AutoBERTT()])
     # sc = Scorer(scorers=[AutoBERTT(), ASL(),
     #                      CurveLength(), DPD(), Entropy(), Gini(), HL(), HPoint(), IPD(), NPD(), Lambda(),
     #                      lmbd(), NDW(), PPD(), PREPPD(), Q(), R1(), RR(), RRR(), STC(), Syn(), TC(),
     #                      TypeTokenRatio(), uniquegrams(), VD(), VPD()])
-    # sc = Scorer(scorers=[ADJPD(), AdjustedModulus(), ADVPD(), Alpha(), APD(), ATL(), AutoBERTT(), ASL(),
-    #                  CurveLength(), DPD(), Entropy(), Gini(), HL(), HPoint(), IPD(), NPD(), Lambda(),
-    #                  lmbd(), NDW(), PPD(), PREPPD(), Q(), R1(), RR(), RRR(), STC(), Syn(), TC(),
-    #                  TypeTokenRatio(), uniquegrams(), VD(), VPD()])
+    sc = Scorer(scorers=[ADJPD(), AdjustedModulus(), ADVPD(), Alpha(), APD(), ATL(), AutoBERTT(), ASL(),
+                     CurveLength(), DPD(), Entropy(), Gini(), HL(), HPoint(), IPD(), NPD(), Lambda(),
+                     lmbd(), NDW(), PPD(), PREPPD(), Q(), R1(), RR(), RRR(), STC(), Syn(), TC(),
+                     TypeTokenRatio(), uniquegrams(), VD(), VPD()])
     scores, names, text_hash = sc.run("de", "dummy",
                                       "Fiona und Marc Sauer* sind erschöpft. Müde. Ausgelaugt. Angespannt. Die Eltern haben für ihren Sohn Maximilian*, sieben Jahre alt, keinen Betreuungsplatz am Nachmittag gefunden. Das heißt: Der Erstklässler kommt seit September - an den meisten Tagen - um 11.30 Uhr von der Schule nach Hause. Fiona und Marc Sauer sind aber beide berufstätig.")
     print(scores)

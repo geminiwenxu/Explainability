@@ -1,14 +1,17 @@
-from pkg_resources import resource_filename
-import yaml
 import json
+
 import pandas as pd
-from feature.feature_generator import Scorer
+import yaml
+from pkg_resources import resource_filename
+from transformers import BertTokenizer
+
 from feature.feature_generator import ADJPD, AdjustedModulus, ADVPD, Alpha, APD, ATL, AutoBERTT, ASL
 from feature.feature_generator import CurveLength, DPD, Entropy, Gini, HL, HPoint, IPD, NPD, Lambda, lmbd, NDW
 from feature.feature_generator import PPD, PREPPD, Q, R1, RR, RRR, STC, Syn, TC, TypeTokenRatio, uniquegrams, VD, VPD
-from transformers import BertTokenizer
+from feature.feature_generator import Scorer
 
 print("Start")
+bert_model = BertTokenizer.from_pretrained('bert-base-uncased')
 
 
 def get_config(path: str) -> dict:
@@ -19,8 +22,7 @@ def get_config(path: str) -> dict:
 
 def main():
     config = get_config('/../config/config.yaml')
-    feature_pos_file_path = resource_filename(__name__, config['feature_pos_file_path']['path'])
-    feature_test_file_path = resource_filename(__name__, config['feature_test_file_path']['path'])
+    feature_pos_file_path = resource_filename(__name__, config['feature_pos_test_file_path']['path'])
 
     df = pd.read_csv(feature_pos_file_path, sep=',')
     data = []
@@ -29,9 +31,7 @@ def main():
         text_input = row['text']
         tokenizer = BertTokenizer.from_pretrained(config['pre_trained_model_name'])
         tokens = tokenizer.tokenize(text_input)
-        print(text_input)
-        # print(len(tokens))
-        if len(tokens) < 512:
+        if len(tokens) < 510:
             try:
                 sc = Scorer(scorers=[ADJPD(), AdjustedModulus(), ADVPD(), Alpha(), APD(), ATL(), AutoBERTT(), ASL(),
                                      CurveLength(), DPD(), Entropy(), Gini(), HL(), HPoint(), IPD(), NPD(), Lambda(),

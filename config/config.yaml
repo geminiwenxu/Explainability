@@ -68,7 +68,7 @@ feature_pos_file_path:
   path: /../data/correct_classification.csv
 
 pos_feature_file_path:
-  path: /../data/pos_feature.json
+  path: /../data/pos_feature_new.json
 neg_feature_file_path:
   path: /../data/neg_feature.json
 feature_file_path:
@@ -100,3 +100,12 @@ output_dir:
 
 embedings_file_path:
   path: /../data/mean_embedding.json
+
+sen_embedding_path:
+  path: /../data/sen_embedding.json
+max_embedding_path:
+  path: /../data/max_embedding.json
+min_embedding_path:
+  path: /../data/min_embedding.json
+sum_embedding_path:
+  path: /../data/sum_embedding.json
