@@ -85,7 +85,7 @@ if __name__ == "__main__":
                 ls.append(dict)
         for p in feature_pos:
             dict = {}
-            pos_feature_obj = json.loads(n)
+            pos_feature_obj = json.loads(p)
             pos_feature_text = pos_feature_obj['text']
             pos_feature = pos_feature_obj['feature']
             if em_text == pos_feature_text:
