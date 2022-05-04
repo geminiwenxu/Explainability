@@ -32,9 +32,9 @@ def get_pacmap_pca_tsne_word_vs_x(word_vec_list: list, other_emb: list, legend_n
     out_pacmap = output_dir.replace(".png", "_PaCMAP.png")
     out_tsne = output_dir.replace(".png", "_TSNE.png")
     os.makedirs(os.path.dirname(out_pca), exist_ok=True)
-    get_visualisation(X_r_pca, y_list, legend_names, out_pca, f"PCA {name_title}")
+    # get_visualisation(X_r_pca, y_list, legend_names, out_pca, f"PCA {name_title}")
     # get_visualisation(X_r_pacmap, y_list, legend_names, out_pacmap, f"PaCMAP {name_title}")
-    # get_visualisation(X_r_t_sne, y_list, legend_names, out_tsne, f"TSNE {name_title}")
+    get_visualisation(X_r_t_sne, y_list, legend_names, out_tsne, f"TSNE {name_title}")
 
 
 def get_visualisation(X_r, labels, legend_names, output_dir, name_title):
