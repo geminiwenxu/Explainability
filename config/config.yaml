@@ -114,3 +114,8 @@ mean_embedding_path:
 
 agg_embeddings_file_path:
   path: /../data/embedding.json
+
+bert_feat_neg:
+  path: /../data/bert_feat_neg.json
+bert_feat_pos:
+  path: /../data/bert_feat_pos.json
